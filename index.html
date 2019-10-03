@@ -9,9 +9,21 @@
 
     <!-- Compiled and minified JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.min.js"></script>
+
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <!-- link peta atau MAP leaflet -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css"
+       integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+       crossorigin=""/>
+     <!-- Make sure you put this AFTER Leaflet's CSS -->
+     <script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js"
+       integrity="sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og=="
+       crossorigin=""></script>
+
     <style type="text/css">
       .card .card-content{
         padding: 12px;
@@ -27,6 +39,19 @@
       }
       .kategori .judul{
         font-size: 18px;
+      }
+      /*css untuk map leaflet mengatur tinggi peta, WAJIB ada*/
+      #mapid { height: 400px; }
+
+      .sosmed{
+        padding: 10px;
+        padding-left: 15px;
+      }
+      .fb-color{
+        background-color: #1D3C78;
+      }
+      .twitter-color{
+        background-color: #08a0e9;
       }
     </style>     
 </head>
@@ -152,15 +177,61 @@
     </div>
   </div>
 
+  <!-- <a href="https://www.google.com/maps/place/8%C2%B041'15.7%22S+116%C2%B007'18.0%22E/@-8.6880482,116.1209349,17.78z/data=!4m14!1m7!3m6!1s0x2dcdbc68d2e3c28f:0xe0cc3245d4116ee1!2sGerung,+West+Lombok+Regency,+West+Nusa+Tenggara!3b1!8m2!3d-8.6958656!4d116.1241257!3m5!1s0x0:0x0!7e2!8m2!3d-8.6876942!4d116.1216642" class="btn">Click here</a> -->
 
+  <div class="row">
+    <div class="col s12 l8 offset-l2">
+      <div class="kategori">
+        <span class="judul">Toko Kami</span>
+        <a target="_blank" href="https://www.google.com/maps/place/8%C2%B041'15.7%22S+116%C2%B007'18.0%22E/@-8.6880482,116.1209349,17.78z/data=!4m14!1m7!3m6!1s0x2dcdbc68d2e3c28f:0xe0cc3245d4116ee1!2sGerung,+West+Lombok+Regency,+West+Nusa+Tenggara!3b1!8m2!3d-8.6958656!4d116.1241257!3m5!1s0x0:0x0!7e2!8m2!3d-8.6876942!4d116.1216642"><span class="right red-text darken-3">Gmaps</span></a>
+      </div>
+    </div>
+    <div class="col s12 m12 l8 offset-l2">     
+      <div id="mapid"></div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col s12">
+      <div class="kategori">
+        <span class="judul">Ikuti Kami</span>
+      </div>
+    </div>
+    <div class="col s12 m4 l4">
+      <div class="sosmed">
+          <a class="btn-floating btn-large waves-effect waves-light indigo darken-3" href="#" target="_blank">
+            <i class="fa fa-facebook" style="font-size: 32px;"></i>
+          </a>
+          <a class="btn-floating btn-large waves-effect waves-light grey darken-3" href="#" target="_blank">
+            <i class="fa fa-instagram" style="font-size: 32px;"></i>
+          </a>
+          <a class="btn-floating btn-large waves-effect waves-light blue" href="#" target="_blank">
+            <i class="fa fa-twitter" style="font-size: 32px;"></i>
+          </a>
+      </div>
+    </div>
+  </div>
+
+   <br><br><br><br>
 
 <script type="text/javascript">
 	window.addEventListener("load", function(event) {
-	        var sideNavs = document.querySelectorAll('.sidenav');
-	        for (var i = 0; i < sideNavs.length; i++){
-	            M.Sidenav.init(sideNavs[i]);
-	        }
-	    });
+    var sideNavs = document.querySelectorAll('.sidenav');
+    for (var i = 0; i < sideNavs.length; i++){
+        M.Sidenav.init(sideNavs[i]);
+    }
+  });
+
+    var mymap = L.map('mapid').setView([-8.687694, 116.121664], 16);
+    var jenisMap = [];
+    jenisMap [0] = 'hybrid/{z}/{x}/{y}.jpg';
+    jenisMap [1] = 'streets/{z}/{x}/{y}.png';
+
+    L.tileLayer('https://api.maptiler.com/maps/'+jenisMap[1]+'?key=Gd9dWi3nATL5dN3RsukK', {
+      attribution: '<a href="https://www.maptiler.com/copyright/" target="_blank">© MapTiler</a> <a href="https://www.openstreetmap.org/copyright" target="_blank">© OpenStreetMap contributors</a>',
+    }).addTo(mymap);
+
+    var marker = L.marker([-8.687694, 116.121664]).addTo(mymap);
 </script>
 </body>
 </html>
